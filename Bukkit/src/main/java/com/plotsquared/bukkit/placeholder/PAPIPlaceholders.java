@@ -82,6 +82,36 @@ public class PAPIPlaceholders extends PlaceholderExpansion {
 
             return String.valueOf(pl.getPlotCount(identifier));
         }
+        int id;
+            Plot plot;
+            List plots;
+            if (identifier.startsWith("currentplot_x_")) {
+               try {
+                  id = Integer.parseInt(identifier.split("_")[2]);
+                  if (pl.getPlots().size() < id) {
+                     return "";
+                  } else {
+                     plots = PS.get().sortPlotsByTemp(pl.getPlots());
+                     plot = (Plot)plots.get(id - 1);
+                     return String.valueOf(plot.getId().x);
+                  }
+               } catch (Exception var9) {
+                  return "";
+               }
+            } else if (identifier.startsWith("currentplot_y_")) {
+               try {
+                  id = Integer.parseInt(identifier.split("_")[2]);
+                  if (pl.getPlots().size() < id) {
+                     return "";
+                  } else {
+                     plots = PS.get().sortPlotsByTemp(pl.getPlots());
+                     plot = (Plot)plots.get(id - 1);
+                     return String.valueOf(plot.getId().y);
+                  }
+               } catch (Exception var10) {
+                  return "";
+               }
+
 
         // PlotSquared placeholders
         return PlotSquared.platform().placeholderRegistry().getPlaceholderValue(identifier, pl);
